@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs Employee Cost Calculator</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border: #dee2e6;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7ff;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: var(--secondary);
+        }
+        
+        .results {
+            display: none;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 500;
+        }
+        
+        .result-value {
+            font-weight: 600;
+        }
+        
+        .highlight {
+            background-color: rgba(67, 97, 238, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .highlight .result-value {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+        
+        .example {
+            background-color: #e6f7ff;
+        }
+        
+        .cta {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .cta-button {
+            background: #f72585;
+            padding: 16px;
+            font-size: 1.1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI vs Employee Cost Calculator</h1>
+        <p class="subtitle">See how much you can save by replacing repetitive tasks with AI agents</p>
+    </header>
+    
+    <main>
+        <div class="card">
+            <h2>Your Employee Details</h2>
+            <div class="form-group">
+                <label for="salary">Monthly Salary ($)</label>
+                <input type="number" id="salary" placeholder="e.g., 5000" value="5000">
+            </div>
+            
+            <div class="form-group">
+                <label for="hours">Hours Worked Per Month</label>
+                <input type="number" id="hours" placeholder="e.g., 160" value="160">
+            </div>
+            
+            <div class="form-group">
+                <label for="tasks">Tasks Handled Per Month</label>
+                <input type="number" id="tasks" placeholder="e.g., 200" value="200">
+            </div>
+            
+            <button onclick="calculateCosts()">Calculate Savings</button>
+        </div>
+        
+        <div class="card results" id="results">
+            <h2>Your Cost Analysis</h2>
+            
+            <div class="result-row">
+                <span class="result-label">Employee Cost:</span>
+                <span class="result-value" id="employee-cost">$0</span>
+            </div>
+            
+            <div class="result-row">
+                <span class="result-label">Cost Per Task:</span>
+                <span class="result-value" id="cost-per-task">$0</span>
+            </div>
+            
+            <div class="result-row">
+                <span class="result-label">AI Agent Equivalent Cost:</span>
+                <span class="result-value" id="ai-cost">$0</span>
+            </div>
+            
+            <div class="result-row">
+                <span class="result-label">Potential Monthly Savings:</span>
+                <span class="result-value" id="savings">$0</span>
+            </div>
+            
+            <div class="highlight">
+                <div class="result-label">Annual Savings Potential</div>
+                <div class="result-value" id="annual-savings">$0</div>
+            </div>
+        </div>
+        
+        <div class="card example">
+            <h2>Example: 8-Agent Setup Comparison</h2>
+            <p>Replacing 8 employees with AI agents handling similar tasks:</p>
+            
+            <div class="result-row">
+                <span class="result-label">Total Employee Costs (8 people):</span>
+                <span class="result-value">$40,000/month</span>
+            </div>
+            
+            <div class="result-row">
+                <span class="result-label">Total AI Agent Costs (8 agents):</span>
+                <span class="result-value">$800/month</span>
+            </div>
+            
+            <div class="highlight">
+                <div class="result-label">Monthly Savings</div>
+                <div class="result-value">$39,200</div>
+                <div class="result-label">That's $468,000 annually!</div>
+            </div>
+        </div>
+        
+        <div class="card cta">
+            <h2>Ready to Transform Your Workforce?</h2>
+            <p>Get a custom AI Workforce Audit for your business and see exactly how much you can save.</p>
+            <button class="cta-button" onclick="window.open('https://calendly.com/vadguschin/30min', '_blank')">
+                Get Your Custom AI Workforce Audit - Only $99
+            </button>
+        </div>
+    </main>
+    
+    <div class="footer">
+        <p>This calculator provides estimates only. Actual savings may vary based on implementation.</p>
+    </div>
+
+    <script>
+        function calculateCosts() {
+            // Get input values
+            const salary = parseFloat(document.getElementById('salary').value) || 0;
+            const hours = parseFloat(document.getElementById('hours').value) || 0;
+            const tasks = parseFloat(document.getElementById('tasks').value) || 0;
+            
+            // Validate inputs
+            if (salary <= 0 || hours <= 0 || tasks <= 0) {
+                alert("Please enter valid positive numbers for all fields");
+                return;
+            }
+            
+            // Calculate metrics
+            const employeeCost = salary;
+            const costPerTask = employeeCost / tasks;
+            
+            // AI agent cost assumptions:
+            // Average AI agent costs $10/hour to operate
+            // AI agents work 24/7 (720 hours/month)
+            const aiAgentHourlyRate = 10;
+            const aiAgentHoursPerMonth = 720;
+            const aiAgentMonthlyCost = aiAgentHourlyRate * aiAgentHoursPerMonth;
+            
+            // Calculate AI cost per task (AI can handle 10x more tasks)
+            const aiTasksPerMonth = tasks * 10;
+            const aiCostPerTask = aiAgentMonthlyCost / aiTasksPerMonth;
+            
+            // Calculate savings
+            const monthlySavings = employeeCost - aiAgentMonthlyCost;
+            const annualSavings = monthlySavings * 12;
+            
+            // Display results
+            document.getElementById('employee-cost').textContent = '$' + employeeCost.toLocaleString();
+            document.getElementById('cost-per-task').textContent = '$' + costPerTask.toFixed(2);
+            document.getElementById('ai-cost').textContent = '$' + aiAgentMonthlyCost.toLocaleString();
+            document.getElementById('savings').textContent = '$' + monthlySavings.toLocaleString();
+            document.getElementById('annual-savings').textContent = '$' + annualSavings.toLocaleString();
+            
+            // Show results section
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Calculate on page load with default values
+        window.onload = function() {
+            calculateCosts();
+        };
+    </script>
+</body>
+</html>

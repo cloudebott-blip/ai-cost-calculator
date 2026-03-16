@@ -1,0 +1,45 @@
+Google Sheets Template Version:
+
+To create a Google Sheets version of the calculator:
+
+1. Create a new Google Sheet with these column headers:
+   - Input Variables (Column A)
+   - Values (Column B)
+   - Calculations (Column C)
+   - Results (Column D)
+
+2. Input Section (Rows 1-10):
+   - A1: "Monthly Salary ($)"
+   - B1: [Input cell - user enters salary]
+   - A2: "Hours Worked Per Month"
+   - B2: [Input cell - user enters hours]
+   - A3: "Tasks Handled Per Month"
+   - B3: [Input cell - user enters tasks]
+
+3. Calculation Section (Rows 12-20):
+   - A12: "Employee Cost"
+   - D12: =B1
+   - A13: "Cost Per Task"
+   - D13: =B1/B3
+   - A14: "AI Agent Monthly Cost"
+   - D14: 800 (assumed value)
+   - A15: "AI Cost Per Task"
+   - D15: =800/(B3*10)
+   - A16: "Monthly Savings"
+   - D16: =B1-800
+   - A17: "Annual Savings"
+   - D17: =(B1-800)*12
+
+4. Formatting:
+   - Use currency formatting for dollar amounts
+   - Add borders and color coding for visual appeal
+   - Include a chart comparing employee vs AI costs
+   - Add a text box with the CTA: "Get Your Custom AI Workforce Audit - Only $99"
+   - Include the Calendly link: https://calendly.com/vadguschin/30min
+
+5. Protection:
+   - Protect calculation cells from editing
+   - Allow input cells to be editable
+   - Add instructions tab for users
+
+This template can be duplicated for each new lead and shared via Google Sheets sharing features.
