@@ -294,14 +294,17 @@
             const aiTasksPerMonth = tasks * 10;
             const aiCostPerTask = aiAgentMonthlyCost / aiTasksPerMonth;
             
-            // Calculate savings
-            const monthlySavings = employeeCost - aiAgentMonthlyCost;
+            // Calculate savings based on task comparison
+            // If AI can do 10x tasks, we only need 1/10th the agents
+            const equivalentAiAgentsNeeded = 0.1;
+            const aiCostForEquivalentWork = aiAgentMonthlyCost * equivalentAiAgentsNeeded;
+            const monthlySavings = employeeCost - aiCostForEquivalentWork;
             const annualSavings = monthlySavings * 12;
             
             // Display results
             document.getElementById('employee-cost').textContent = '$' + employeeCost.toLocaleString();
             document.getElementById('cost-per-task').textContent = '$' + costPerTask.toFixed(2);
-            document.getElementById('ai-cost').textContent = '$' + aiAgentMonthlyCost.toLocaleString();
+            document.getElementById('ai-cost').textContent = '$' + aiCostForEquivalentWork.toLocaleString();
             document.getElementById('savings').textContent = '$' + monthlySavings.toLocaleString();
             document.getElementById('annual-savings').textContent = '$' + annualSavings.toLocaleString();
             
